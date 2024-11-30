@@ -20,8 +20,12 @@ function login(payload: LoginUserPayload): Promise<ApiResponse<UserResource>> {
   return httpClient.post('/api/login', payload);
 }
 
+function logout(): Promise<ApiResponse> {
+  return httpClient.post('/api/logout');
+}
+
 function getAuthenticatedUser(): Promise<ApiResponse<UserResource>> {
   return httpClient.get('/api/user');
 }
 
-export { getCsrf, register, login, getAuthenticatedUser };
+export { getCsrf, register, login, logout, getAuthenticatedUser };
