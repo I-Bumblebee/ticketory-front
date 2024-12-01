@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -86,6 +87,18 @@ export default function LoginUserForm() {
           {isSubmitting ? 'Signing in...' : 'Login'}
         </button>
       </form>
+
+      <div className="mt-6 text-center">
+        <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
+          <span>Don&#39;t have an account?</span>
+          <Link
+            href="/register"
+            className="text-blue-500 font-semibold hover:text-blue-600 transition duration-300 hover:underline"
+          >
+            Register here
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

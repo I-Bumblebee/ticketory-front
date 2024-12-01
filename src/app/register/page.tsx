@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { register as registerUser } from '@/services/api/auth';
 import { ApiError } from '@/types/common';
 import { handleApiFormErrors } from '@/utils/form-errors';
+import Link from 'next/link';
 
 const registrationSchema = z
   .object({
@@ -138,6 +139,18 @@ export default function RegistrationForm() {
           {isSubmitting ? 'Registering...' : 'Register'}
         </button>
       </form>
+
+      <div className="mt-6 text-center">
+        <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
+          <span>Already have an account?</span>
+          <Link
+            href="/login"
+            className="text-blue-500 font-semibold hover:text-blue-600 transition duration-300 hover:underline"
+          >
+            Login here
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
