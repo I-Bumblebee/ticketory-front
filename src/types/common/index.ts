@@ -24,3 +24,8 @@ export type ApiError = AxiosError<{
   message?: string;
   errors?: Record<string, string[]>;
 }>;
+
+export type Option = {
+  name?: string;
+  value?: string | number;
+};
