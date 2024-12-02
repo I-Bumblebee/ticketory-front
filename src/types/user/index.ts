@@ -1,5 +1,6 @@
 export type UserResource = {
   id: number;
+  is_admin: boolean;
   name: string;
   lastname: string;
   full_name: string;
