@@ -2,6 +2,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { UserResource } from '@/types/user';
 import { getCsrf, getAuthenticatedUser, logout } from '@/services/api/auth';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 type UserContextType = {
   user: UserResource | null | undefined;
@@ -22,6 +24,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<UserResource | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const refreshUser = async () => {
     try {
@@ -41,9 +44,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logoutUser = async () => {
     logout()
-      .then(() => setUser(null))
+      .then(() => {
+        setUser(null);
+        router.replace('/');
+      })
       .catch(() => {
-        // TODO: Show toast to try again
+        toast.error('Something went wrong please try soon.');
       });
   };
 

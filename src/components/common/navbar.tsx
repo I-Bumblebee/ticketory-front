@@ -15,7 +15,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           {user ? (
             <>
-              {user.is_admin && (
+              {user.is_admin ? (
                 <Link
                   href="/admin/users/tickets"
                   className="p-2 pl-1.5 text-sm text-white bg-red-500 font-semibold rounded-md hover:bg-red-600 transition-colors flex items-center gap-1"
@@ -23,6 +23,8 @@ export default function Navbar() {
                 >
                   <Shield size={20} />
                 </Link>
+              ) : (
+                <></>
               )}
               <Link
                 href={`/users/${user.id}/tickets`}
