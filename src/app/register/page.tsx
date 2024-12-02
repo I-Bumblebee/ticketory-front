@@ -53,7 +53,10 @@ export default function RegistrationForm() {
 
   return (
     <div className="max-w-md mx-auto mt-10">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4 px-2.5 md:px-0"
+      >
         <div>
           <label htmlFor="name" className="block mb-2">
             Name

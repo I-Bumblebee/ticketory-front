@@ -23,9 +23,15 @@ const UserPage = () => {
   }, [userId]);
   return (
     <div className="max-w-7xl m-auto mt-10  p-4 md:p-8 md:px-0 flex flex-col gap-3">
-      {tickets.map((ticket) => {
-        return <TicketCard key={ticket.id} ticket={ticket} />;
-      })}
+      {tickets?.length ? (
+        tickets.map((ticket) => {
+          return <TicketCard key={ticket.id} ticket={ticket} />;
+        })
+      ) : (
+        <div className="text-gray-500 font-medium -mt-8">
+          You have not purchased any tickets yet
+        </div>
+      )}
     </div>
   );
 };
