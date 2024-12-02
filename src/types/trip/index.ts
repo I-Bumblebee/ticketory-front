@@ -14,6 +14,10 @@ export type TripResource = {
   seat_pricing: SeatPricing;
 };
 
-type SeatPricing = {
+export type SeatPricing = {
   [key in VehicleSeatClassEnum]?: number | null;
+};
+
+export type TripTicketsAvailability = {
+  [key in VehicleSeatClassEnum]?: number;
 };
