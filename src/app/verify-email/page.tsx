@@ -2,6 +2,7 @@
 import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { verifyEmail } from '@/services/api/email';
+import toast from 'react-hot-toast';
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
@@ -14,20 +15,21 @@ function VerifyEmailContent() {
     const signature = searchParams.get('signature');
 
     if (!user || !hash || !expires || !signature) {
-      router.push('/');
+      router.replace('/');
       return;
     }
 
     verifyEmail(user, hash, expires, signature)
       .then(() => {
-        // TODO: Show success notification
-        router.push('/login');
+        toast.success('Email verified successfully <3');
+        router.replace('/login');
       })
       .catch(() => {
-        // TODO: Show fail notification
+        toast.error('Email verification url expired. Please try again <3');
+        router.replace('/');
         // WIP: Add request verification email support
       });
-  }, [searchParams, router]);
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
@@ -55,4 +57,3 @@ export default function VerifyEmailPage() {
     </Suspense>
   );
 }
-

@@ -7,6 +7,8 @@ import { register as registerUser } from '@/services/api/auth';
 import { ApiError } from '@/types/common';
 import { handleApiFormErrors } from '@/utils/form-errors';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const registrationSchema = z
   .object({
@@ -26,6 +28,7 @@ const registrationSchema = z
   });
 
 export default function RegistrationForm() {
+  const router = useRouter();
   const {
     register: registerInput,
     handleSubmit,
@@ -39,8 +42,9 @@ export default function RegistrationForm() {
   const onSubmit = async (data: z.infer<typeof registrationSchema>) => {
     registerUser(data)
       .then(() => {
-        // TODO: Ask user to verify email
+        toast.success('Please verify email <3');
         reset();
+        router.push('/login');
       })
       .catch((apiError: ApiError) => {
         handleApiFormErrors(apiError, setError);
