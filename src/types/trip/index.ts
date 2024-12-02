@@ -1,5 +1,6 @@
 import { RouteResource } from '@/types/route';
 import { VehicleResource } from '@/types/vehicle';
+import { VehicleSeatClassEnum } from '@/types/vehicle/emuns';
 
 export type TripResource = {
   id: number;
@@ -10,5 +11,9 @@ export type TripResource = {
   departure_time: string;
   arrival_time: string;
   trip_duration_minutes: number;
-  seat_pricing: object;
+  seat_pricing: SeatPricing;
+};
+
+type SeatPricing = {
+  [key in VehicleSeatClassEnum]?: number | null;
 };
