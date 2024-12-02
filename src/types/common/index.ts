@@ -29,3 +29,11 @@ export type Option = {
   name?: string;
   value?: string | number;
 };
+
+export type QueryOptions = {
+  filters: Option[];
+  pagination?: {
+    page: number;
+    perPage: number;
+  };
+};
