@@ -3,21 +3,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
 
 const Dropdown = ({
-  label,
   value,
   options,
   onChange,
   disabled = false,
   loading = false,
   placeholder = 'Select an option',
+  className = '',
 }: {
-  label: string;
   value: number | null;
   options: Option[];
   onChange: (value: number) => void;
   disabled?: boolean;
   loading?: boolean;
   placeholder?: string;
+  className?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -58,9 +58,6 @@ const Dropdown = ({
 
   return (
     <div ref={dropdownRef} className="relative w-full">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        {label}
-      </label>
       <div className="relative">
         {/* Dropdown Trigger */}
         <button
@@ -75,6 +72,7 @@ const Dropdown = ({
                 : 'bg-white hover:border-indigo-500 focus:ring-2 focus:ring-indigo-500'
             }
             text-left text-base
+            ${className}
           `}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
