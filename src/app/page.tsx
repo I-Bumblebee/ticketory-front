@@ -12,6 +12,13 @@ import TripCard from '@/components/trip/trip-card';
 import { QueryOptions } from '@/types/common';
 import dayjs from 'dayjs';
 
+const findRouteByTrip = (
+  routes: RouteResource[],
+  trip: TripResource
+): RouteResource => {
+  return routes.find((route) => route.id === trip.route_id) as RouteResource;
+};
+
 const ErrorAlert = ({ message }: { message: string }) => (
   <div
     className="
@@ -83,6 +90,7 @@ export default function TripSearchForm() {
     routeId: number,
     queryOptions?: QueryOptions
   ) => {
+    console.log(routeId, queryOptions);
     setError(null);
     try {
       setSelectedRoute(routeId);
@@ -112,7 +120,7 @@ export default function TripSearchForm() {
   return (
     <div
       className="
-        max-w-7xl mx-auto p-4 md:p-8 mt-10
+        max-w-7xl mx-auto p-4 md:p-8 md:px-0 mt-10
       "
     >
       <h1
@@ -132,7 +140,7 @@ export default function TripSearchForm() {
           <Dropdown
             value={selectedLocation}
             options={locations.map((loc) => ({
-              name: `${loc.name}, ${loc.city}, ${loc.country}`,
+              name: `${loc.name}`,
               value: loc.id,
             }))}
             onChange={handleLocationChange}
@@ -146,7 +154,7 @@ export default function TripSearchForm() {
             value={selectedRoute}
             options={routes.map((route) => ({
               name: route.end_location?.name || 'Unnamed Route',
-              value: route.end_location?.id || -1,
+              value: route.id,
             }))}
             onChange={fetchRouteTrips}
             loading={loading.routes}
@@ -159,8 +167,6 @@ export default function TripSearchForm() {
             onChange={handleDateChange}
             className="!rounded-t-none md:!rounded-l-none md:!rounded-tr-lg"
           />
-
-          {/*  Datepicker here. on small screens it needs to have border bottom rounded md and on md:* screen it needs border right rounded w-full and it should look like these dropwodns to fit int style*/}
         </div>
         {selectedRoute && (
           <div>
@@ -180,7 +186,11 @@ export default function TripSearchForm() {
             ) : trips.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-1 gap-3 md:gap-6">
                 {trips.map((trip) => (
-                  <TripCard key={trip.id} trip={trip} />
+                  <TripCard
+                    key={trip.id}
+                    trip={trip}
+                    route={findRouteByTrip(routes, trip)}
+                  />
                 ))}
               </div>
             ) : (
