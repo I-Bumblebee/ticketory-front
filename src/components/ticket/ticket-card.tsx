@@ -105,7 +105,7 @@ const TicketCard = ({ ticket }: { ticket: TicketResource }) => {
           <MapPinCheck className="stroke-gray-500" />
         </div>
         <div className="flex flex-col gap-4">
-          <p className="text-xl text-[#222222] truncate max-w-80 tracking-wider font-bold inline-flex items-center gap-2">
+          <p className="text-xl text-[#222222] truncate max-w-80 md:max-w-none tracking-wider font-bold inline-flex items-center gap-2">
             {getTime(trip.departure_time)}
             <span className="text-[#717171] font-normal text-base">
               {route.start_location?.name}
@@ -124,7 +124,7 @@ const TicketCard = ({ ticket }: { ticket: TicketResource }) => {
               </div>
             </div>
           </div>
-          <p className="text-xl text-[#222222] truncate max-w-80 tracking-wider font-bold inline-flex items-center gap-2">
+          <p className="text-xl text-[#222222] truncate max-w-80 md:max-w-none tracking-wider font-bold inline-flex items-center gap-2">
             {getTime(trip.arrival_time)}
             <span className="text-[#717171] font-normal text-base">
               {route.end_location?.name}

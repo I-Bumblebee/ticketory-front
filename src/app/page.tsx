@@ -111,7 +111,7 @@ export default function TripSearchForm() {
       filters: [
         {
           name: 'date',
-          value: dayjs(newDate ?? new Date()).format('YYYY-MM-DD'),
+	  value: newDate ? dayjs(newDate).format('YYYY-MM-DD') : '',
         },
       ],
     });

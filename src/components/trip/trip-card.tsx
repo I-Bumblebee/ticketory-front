@@ -16,7 +16,7 @@ import {
 import { TripResource } from '@/types/trip';
 import { RouteResource } from '@/types/route';
 import { VehicleSeatClassEnum } from '@/types/vehicle/emuns';
-import { formatMinutes, formatDate } from '@/plugins/dayjs';
+import { formatMinutes, formatDate, extractTime } from '@/plugins/dayjs';
 import { Tooltip } from 'react-tooltip';
 import { buyTickets } from '@/services/api/trip';
 import { ApiError } from '@/types/common';
@@ -61,13 +61,6 @@ const SEAT_CLASS_DETAILS = {
     label: 'Sleeper',
     description: 'Full comfort for long trips',
   },
-};
-
-export const getTime = (dateTimeString: string): string => {
-  return new Date(dateTimeString).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
 };
 
 export const formatSeatPricing = (
@@ -135,8 +128,8 @@ const TripCard = ({
           <MapPinCheck className="stroke-gray-500" />
         </div>
         <div className="flex flex-col gap-4">
-          <p className="text-xl text-[#222222] truncate max-w-80 tracking-wider font-bold inline-flex items-center gap-2">
-            {getTime(trip.departure_time)}
+          <p className="text-xl text-[#222222] truncate max-w-80 md:max-w-none tracking-wider font-bold inline-flex items-center gap-2">
+            {extractTime(trip.departure_time)}
             <span className="text-[#717171] font-normal text-base">
               {route.start_location?.name}
             </span>
@@ -154,8 +147,8 @@ const TripCard = ({
               </div>
             </div>
           </div>
-          <p className="text-xl text-[#222222] truncate max-w-80 tracking-wider font-bold inline-flex items-center gap-2">
-            {getTime(trip.arrival_time)}
+          <p className="text-xl text-[#222222] truncate max-w-80 md:max-w-none tracking-wider font-bold inline-flex items-center gap-2">
+            {extractTime(trip.arrival_time)}
             <span className="text-[#717171] font-normal text-base">
               {route.end_location?.name}
             </span>
@@ -211,10 +204,6 @@ const BuyTicketModal = ({
     return trip.seat_pricing[seatClass] || 0;
   }, [trip.seat_pricing, seatClass]);
 
-  const departureDate: string = useMemo(() => {
-    return formatDate(new Date(trip.departure_time));
-  }, [trip.departure_time]);
-
   const [ticketCount, setTicketCount] = useState(1);
   const router = useRouter();
   const { user } = useUser();
@@ -265,7 +254,7 @@ const BuyTicketModal = ({
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-lg font-semibold text-[#222222]">
-                  {departureDate}
+                  {formatDate(trip.departure_time)}
                 </p>
                 <p className="text-sm text-[#717171]">
                   {route.start_location!.name} - {route.end_location!.name} ~{' '}
@@ -329,3 +318,4 @@ const BuyTicketModal = ({
 };
 
 export default memo(TripCard);
+
